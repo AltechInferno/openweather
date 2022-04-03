@@ -54,7 +54,7 @@ Resources:
   AwsServerlessExpressFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://openweatherapibucket/2cfc03f9f07390108cc98b3a1bdb14e5
+      CodeUri: s3://openweatherapibucket/241dd171f2c09612e85c770b2e2f96cf
       Handler: lambda.handler
       MemorySize: 1024
       Role:
