@@ -1,0 +1,5 @@
+/node_modules
+*.pem
+*.ppk
+openweather-api-vm.pem
+openweather-api-vm.ppk

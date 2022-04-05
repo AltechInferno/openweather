@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  .container 
+    h2=title
+    p 
+      |Welcome to #{title}
+    br
+    br
+    .row 
+      .col-md-6 
+        form.form-inline(method='post', action='weather')
+          .form-group 
+            label.sr-only(for="inputCity") City Name 
+            input.form-control(name='city' type='text' placeholder='Enter City Name' required)
+
+            br
+            button.btn.btn-primary(type="submit") Fetch Weather 
+        hr
+    .row 
+      .col-md-6  
+        br
+        br
+        p.text-capitalize|Forecast for #{cityName || "City"}
+        textarea#result.form-control.user-select-none(name="result", rows="8" readonly) #{forecast || "Enter a city in the textbox above\nthen click the Fetch Weather button."}

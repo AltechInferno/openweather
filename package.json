@@ -1,0 +1,52 @@
+{
+  "name": "openweatherapi",
+  "version": "2.0.0",
+  "description": "",
+  "main": "lambda.js",
+  "config": {
+    "accountId": "655098790721",
+    "region": "us-east-1",
+    "s3BucketName": "openweatherapibucket",
+    "cloudFormationStackName": "OpenWeatherAPIStack",
+    "functionName": "OpenWeatherAPIFunction"
+  },
+  "scripts": {
+    "start": "node app.local.js",
+    "config": "node ./scripts/configure.js",
+    "deconfig": "node ./scripts/deconfigure.js",
+    "local": "node scripts/local",
+    "invoke-lambda": "aws lambda invoke --function-name OpenWeatherAPIFunction --region us-east-1 --payload file://api-gateway-event.json lambda-invoke-response.json && cat lambda-invoke-response.json",
+    "create-bucket": "aws s3 mb s3://openweatherapibucket --region us-east-1",
+    "delete-bucket": "aws s3 rb s3://openweatherapibucket --region us-east-1",
+    "package": "aws cloudformation package --template ./cloudformation.yaml --s3-bucket openweatherapibucket --output-template packaged-sam.yaml --region us-east-1",
+    "deploy": "aws cloudformation deploy --template-file packaged-sam.yaml --stack-name OpenWeatherAPIStack --capabilities CAPABILITY_IAM --region us-east-1",
+    "package-deploy": "npm run package && npm run deploy",
+    "delete-stack": "aws cloudformation delete-stack --stack-name OpenWeatherAPIStack --region us-east-1",
+    "setup": "npm install && (aws s3api get-bucket-location --bucket openweatherapibucket --region us-east-1 || npm run create-bucket) && npm run package-deploy",
+    "win-config": "npm run config",
+    "win-deconfig": "npm run deconfig",
+    "win-local": "npm run local",
+    "win-invoke-lambda": "aws lambda invoke --function-name OpenWeatherAPIFunction --region us-east-1 --payload file://api-gateway-event.json lambda-invoke-response.json && cat lambda-invoke-response.json",
+    "win-create-bucket": "aws s3 mb s3://openweatherapibucket --region us-east-1",
+    "win-delete-bucket": "aws s3 rb s3://openweatherapibucket --region us-east-1",
+    "win-package": "aws cloudformation package --template ./cloudformation.yaml --s3-bucket openweatherapibucket --output-template packaged-sam.yaml --region us-east-1",
+    "win-deploy": "aws cloudformation deploy --template-file packaged-sam.yaml --stack-name OpenWeatherAPIStack --capabilities CAPABILITY_IAM --region us-east-1",
+    "win-package-deploy": "npm run win-package && npm run win-deploy",
+    "win-delete-stack": "aws cloudformation delete-stack --stack-name OpenWeatherAPIStack --region us-east-1",
+    "win-setup": "npm install && (aws s3api get-bucket-location --bucket openweatherapibucket --region us-east-1 || npm run win-create-bucket) && npm run win-package-deploy"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1106.0",
+    "aws-serverless-express": "^3.4.0",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^16.0.0",
+    "express": "~4.16.1",
+    "http": "^0.0.1-security",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.15",
+    "pug": "2.0.0-beta11",
+    "request": "^2.88.2"
+  }
+}
